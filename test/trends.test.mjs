@@ -85,3 +85,36 @@ test("storage: snapshot roundtrip and watch persistence", async () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+
+test("computeReport with a single snapshot (no history depth)", () => {
+  const report = computeReport([snap2], { periodDays: 7, now: NOW });
+  assert.equal(report.snapshots, 1);
+  assert.ok(report.total > 0);
+  assert.deepEqual(report.starGainers, []);
+});
+
+test("computeReport window excludes plugins created before the window", () => {
+  const old = mk("old/plugin", 5, { created: NOW - 30 * DAY });
+  const snap = { ts: NOW, repos: [old], awesome: [] };
+  const report = computeReport([snap], { periodDays: 7, now: NOW });
+  assert.equal(report.newPlugins.length, 0);
+});
+
+test("filterByKeywords with no keywords matches nothing", () => {
+  assert.deepEqual(filterByKeywords([mk("a/b", 1)], []), []);
+});
+
+test("storage tolerates a missing directory", async () => {
+  const { mkdtempSync, rmSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const { join } = await import("node:path");
+  const { readSnapshots, readWatch } = await import("../lib/storage.js");
+  const dir = mkdtempSync(join(tmpdir(), "trend-empty-"));
+  try {
+    assert.deepEqual(readSnapshots(dir), []);
+    assert.deepEqual(readWatch(dir), []);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
