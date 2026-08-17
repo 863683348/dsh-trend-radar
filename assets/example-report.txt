@@ -1,0 +1,13 @@
+Ecosystem trend report (last 7d, 1 snapshots, 100 repos)
+awesome-dsh-plugin coverage: 14%
+
+## New plugins
+- jasondu/dsh-ui-mobile [unlisted] 0★ Mobile client plugin for the DeepSeek Harness Web shell
+- JxaMe/dsh-telegram-bridge [unlisted] 0★
+- SipengXie2024/dsh-memory-hermes [unlisted] 0★ Hermes-style bounded memory + self-curating skill library
+
+## Star gainers
+- drewnekota/cetus +115★ (now 115)
+
+## Category heat (new additions)
+(none in single snapshot)
