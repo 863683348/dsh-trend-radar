@@ -57,3 +57,11 @@ node test/trends.test.mjs
 ## License
 
 MIT
+
+## FAQ
+
+- **How often should I snapshot?** The `trend_snapshot` tool auto-skips inside the `staleHours` window (default 1h). There is no background timer; collection happens when a tool runs and the history is stale.
+- **Rate limits?** Anonymous GitHub search is 10 req/min / 60 req/h — plenty for hourly snapshots. Set `githubTokenEnv` (e.g. `GH_T`) to a token for 5000 req/h.
+- **Where is the data?** `dataDir` (default `.dsh/trends`): append-only `snapshots-YYYY-MM-DD.jsonl` plus `watch.json`. Delete files to reset history.
+- **The Web UI dashboard?** On the roadmap — same experimental client-panel path as dsh-plugin-focus.
+
