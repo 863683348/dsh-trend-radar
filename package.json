@@ -1,0 +1,27 @@
+{
+  "name": "dsh-trend-radar",
+  "version": "0.1.0",
+  "description": "Ecosystem trend dashboard ('行情面板') for dsh plugins: snapshot the dsh-plugin topic and awesome list into local history, then report weekly trends — new plugins, star gainers, category heat, awesome coverage — plus keyword radar for new plugins and star surges",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./trends": "./lib/trends.js",
+    "./storage": "./lib/storage.js",
+    "./github": "./lib/github.js",
+    "./package.json": "./package.json"
+  },
+  "files": ["lib", "cordis.patch.yml", "README.md", "README.zh.md"],
+  "scripts": { "test": "node --test test/" },
+  "keywords": ["deepseek-harness", "dsh", "dsh-plugin", "cordis", "plugin", "trend", "dashboard", "radar", "analytics"],
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-fs": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-system-prompt": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  }
+}

@@ -1,0 +1,10 @@
+# dsh-trend-radar — bundle patch layer.
+- insert:
+    - id: trend-radar
+      name: 'dsh-trend-radar'
+      config:
+        dataDir: '.dsh/trends'
+        staleHours: 1
+        surgeStars: 20
+        githubTokenEnv: ''
+        sectionOrder: 5
