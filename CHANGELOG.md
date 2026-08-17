@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1] — 2026-08-17
+
+Runtime validation fix (found by booting a real web profile).
+
+- Tool output schemas now place `required: true` on properties only — the dsh-tools value schema DSL rejects a top-level `required` and `type` arrays (`created` now uses `oneOf`). Verified live: `dsh web` boots the profile and serves `/plugins/dsh-trend-radar/client.js` (200) with the panel module and `trendBoard` projection.
+
 ## [0.2.0] — 2026-08-17
 
 Experimental web panel.

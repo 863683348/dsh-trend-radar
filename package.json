@@ -1,6 +1,6 @@
 {
   "name": "dsh-trend-radar",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Ecosystem trend dashboard ('行情面板') for dsh plugins: snapshot the dsh-plugin topic and awesome list into local history, then report weekly trends — new plugins, star gainers, category heat, awesome coverage — plus keyword radar for new plugins and star surges, and an experimental web panel",
   "type": "module",
   "main": "lib/index.js",
