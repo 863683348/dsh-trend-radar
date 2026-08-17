@@ -1,7 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
+  buildDashboard,
   computeReport,
+  computeSeries,
   cutoffMs,
   deltaBetween,
   filterByKeywords,
@@ -117,4 +119,31 @@ test("storage tolerates a missing directory", async () => {
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("computeSeries maps snapshot counts over time", () => {
+  const series = computeSeries([snap0, snap1, snap2]);
+  assert.deepEqual(series, [
+    { ts: 0, count: 2 },
+    { ts: DAY, count: 3 },
+    { ts: 2 * DAY, count: 4 },
+  ]);
+});
+
+test("buildDashboard caps lists and keeps curve points", () => {
+  const report = computeReport([snap0, snap1, snap2], { periodDays: 7, now: NOW, categoryByName: { "c/c": "notify", "d/d": "tools" } });
+  const dash = buildDashboard([snap0, snap1, snap2], report);
+  assert.equal(dash.snapshots, 3);
+  assert.equal(dash.total, 4);
+  assert.equal(dash.series.length, 3);
+  assert.deepEqual(dash.newPlugins.map((p) => p.name), ["c/c", "d/d"]);
+  assert.equal(dash.categoryHeat[0].category, "notify");
+  assert.equal(dash.starGainers[0].name, "a/a");
+});
+
+test("buildDashboard with empty history yields zero series", () => {
+  const report = computeReport([]);
+  const dash = buildDashboard([], report);
+  assert.equal(dash.snapshots, 0);
+  assert.equal(dash.series.length, 0);
 });

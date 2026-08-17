@@ -3,3 +3,4 @@ node_modules/
 npm-token.txt
 .npm-cache/
 *.tgz
+.dsh/

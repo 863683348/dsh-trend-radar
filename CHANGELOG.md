@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.0] — 2026-08-17
+
+Experimental web panel.
+
+- `trendBoard` session projection: after each `trend_report` / `trend_snapshot` run, the dashboard payload (growth curve, category heat, new-plugin and star-gainer lists) is emitted as a `trend/update` session event.
+- `lib/client.js`: read-only dashboard panel rendered above the composer (conversation.input.dock) from the projection — SVG growth curve, category heat bars, top lists. Experimental (same loader-format path as dsh-plugin-focus).
+- `dsh.client` manifest + `./client` export + optional client peerDependencies; `zod` dependency for the projection schema.
+- Pure helpers `computeSeries` / `buildDashboard` in `lib/trends.js` with unit tests.
+
 ## [0.1.0] — 2026-08-17
 
 Initial release.

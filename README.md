@@ -1,6 +1,6 @@
 # dsh-trend-radar — 生态行情面板 (Ecosystem trend dashboard)
 
-**别人是目录，你是仪表盘。** 每小时对 `dsh-plugin` topic 与 awesome-dsh-plugin 收录列表做一次快照（本地 JSONL 历史），然后从**时间维度**分析趋势：周报、新插件雷达、star 增速榜、类别热度、收录覆盖率。
+**别人是目录，你是仪表盘。** 每小时对 `dsh-plugin` topic 与 awesome-dsh-plugin 收录列表做一次快照（本地 JSONL 历史），然后从**时间维度**分析趋势：周报、新插件雷达、star 增速榜、类别热度、收录覆盖率 —— 并带一个 experimental 的 **Web 面板**（增长曲线、类别热度、Top 榜单）直接叠在会话输入框上方。
 
 ## 为什么需要它
 
@@ -31,6 +31,10 @@ dsh plugin --profile <profile> add dsh-trend-radar
 | `githubTokenEnv` | `` | 可选：GitHub token 的环境变量名（匿名 API 限流 60 次/小时，够用；设 token 更稳） |
 | `sectionOrder` | `5` | 提示词段落顺序 |
 
+## Web 面板（experimental）
+
+装在有 Web UI 的 profile 上时，插件把最近一次 `trend_report` / `trend_snapshot` 的仪表盘数据（增长曲线、类别热度、新增插件榜、star 增速榜）通过 session projection 推给浏览器，渲染成输入框上方的只读面板。让 Agent 跑一次 `trend_snapshot` 或 `trend_report` 面板即刷新；每次新 turn 自动清空，避免展示过期数据。
+
 ## 数据流
 
 ```text
@@ -46,7 +50,7 @@ trend_report (周报) · trend_watch (雷达) · trend_snapshot (增量)
 
 - **纯逻辑分离**：`lib/trends.js`（增量/周报/雷达过滤/渲染）、`lib/storage.js`（JSONL + watch.json）、`lib/github.js`（采集 + 解析分离）——全部零 DSH/Cordis 依赖，可单测。
 - **安全**：只读公开 API，写本地数据目录；无 secrets、无注入。
-- **Roadmap**：Web UI 仪表盘（增长曲线、类别分布）——client 面板与 `focusBoard` 同款 experimental 模式，待运行实例验证。
+- **Web 面板**：`lib/client.js` 走 dsh-plugin-focus 同款 experimental client 模式（`dsh.client` manifest + session projection），待运行实例验证。
 
 ## 测试
 
@@ -64,4 +68,3 @@ MIT
 - **Rate limits?** Anonymous GitHub search is 10 req/min / 60 req/h — plenty for hourly snapshots. Set `githubTokenEnv` (e.g. `GH_T`) to a token for 5000 req/h.
 - **Where is the data?** `dataDir` (default `.dsh/trends`): append-only `snapshots-YYYY-MM-DD.jsonl` plus `watch.json`. Delete files to reset history.
 - **The Web UI dashboard?** On the roadmap — same experimental client-panel path as dsh-plugin-focus.
-
